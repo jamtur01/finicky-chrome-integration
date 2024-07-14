@@ -8,6 +8,13 @@ chrome.runtime.onInstalled.addListener(() => {
       chrome.storage.sync.set({ enabled: true });
     }
   });
+
+  // Create context menu item
+  chrome.contextMenus.create({
+    id: "openInFinicky",
+    title: "Open in Finicky",
+    contexts: ["link"],
+  });
 });
 
 // Listen for changes in storage
@@ -37,6 +44,14 @@ function updateIcon(enabled) {
 // Initialize icon state
 chrome.storage.sync.get("enabled", (data) => {
   updateIcon(data.enabled !== false);
+});
+
+// Handle context menu item click
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "openInFinicky") {
+    const finickyUrl = "finicky://" + info.linkUrl.replace(/^https?:\/\//, "");
+    chrome.tabs.update(tab.id, { url: finickyUrl });
+  }
 });
 
 // Optional: Listen for tab updates to refresh content script

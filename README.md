@@ -10,7 +10,8 @@ Finicky Chrome Integration is a Chrome extension that enhances your browsing exp
 
 ## Features
 
-- Open links in Finicky directly from Chrome
+- Open links in Finicky directly from Chrome using a modifier key
+- New: Context menu option to open links in Finicky
 - Customizable modifier key (Shift, Alt, or Command/Windows key)
 - Works across all web pages
 - Seamless integration with Finicky's rule system
@@ -28,8 +29,12 @@ Finicky Chrome Integration is a Chrome extension that enhances your browsing exp
 ## Usage
 
 1. Click the Finicky Integration toolbar icon to enable or disable the extension.
-2. When enabled, hold down your chosen modifier key (default is Shift) while clicking on a link.
+2. When enabled, you can use the extension in two ways:
+   a. Hold down your chosen modifier key (default is Shift) while clicking on a link.
+   b. Right-click on a link and select "Open in Finicky" from the context menu.
 3. The link will be opened through Finicky, allowing your Finicky rules to determine which browser or profile to use.
+
+**Warning**: When opening links with Finicky for the first time, you may see a prompt asking permission to open the link with Finicky. This is a security feature of your operating system. You can choose to allow this action if you trust Finicky and this extension.
 
 ## Configuration
 
@@ -49,7 +54,7 @@ In the options page, you can:
 
 ## How It Works
 
-When the extension is enabled and you hold down the configured modifier key while clicking a link, the extension intercepts the click event. Instead of opening the link directly in Chrome, it modifies the URL to use the `finicky://` protocol and passes it to Finicky. Finicky then applies its rules to determine how to open the link.
+When the extension is enabled and you either hold down the configured modifier key while clicking a link or use the context menu option, the extension intercepts the action. Instead of opening the link directly in Chrome, it modifies the URL to use the `finicky://` protocol and passes it to Finicky. Finicky then applies its rules to determine how to open the link.
 
 ## Troubleshooting
 
@@ -59,6 +64,7 @@ If the extension doesn't seem to be working:
 2. Ensure Finicky is properly installed and configured on your system.
 3. Verify that you're using the correct modifier key (check the Options page).
 4. Try reloading the web page or restarting Chrome.
+5. If you're using the context menu option and it's not appearing, try reloading the extension.
 
 ## Contributing
 
@@ -70,10 +76,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- Thanks to the Finicky project (https://github.com/johnste/finicky) for providing the underlying functionality.
+- Thanks to the [Finicky project](https://github.com/johnste/finicky) for providing the underlying functionality.
 - Icon made by [graphicmall](https://www.flaticon.com/free-icons/infinite") from www.flaticon.com.
 
 ## Version History
 
+- 1.3: Added context menu option to open links in Finicky.
 - 1.2: Added toolbar icon for quick enable/disable, updated options page, removed Ctrl as a modifier key option.
 - 1.1: Initial release with basic Finicky integration functionality.
