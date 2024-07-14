@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Get version from manifest
         id: get_version
-        run: echo "::set-output name=VERSION::$(node -p "require('./manifest.json').version")"
+        run: echo "::set-output name=VERSION::$(grep '"version"' manifest.json | cut -d '"' -f 4)"
 
       - name: Check if release exists
         id: check_release
@@ -25,7 +25,7 @@ jobs:
             echo "::set-output name=exists::false"
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.FINICKY_TOKEN }}
 
       - name: Build extension
         run: |
@@ -36,7 +36,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.FINICKY_TOKEN }}
         with:
           tag_name: v${{ steps.get_version.outputs.VERSION }}
           release_name: Release ${{ steps.get_version.outputs.VERSION }}
@@ -47,7 +47,7 @@ jobs:
         if: steps.check_release.outputs.exists == 'false'
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.FINICKY_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./finicky-chrome-integration.zip
