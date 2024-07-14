@@ -1,0 +1,69 @@
+name: Build Chrome Extension and Create Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get version from manifest
+        id: get_version
+        run: echo "::set-output name=VERSION::$(node -p "require('./manifest.json').version")"
+
+      - name: Check if release exists
+        id: check_release
+        run: |
+          release_tag="v${{ steps.get_version.outputs.VERSION }}"
+          if gh release view $release_tag &> /dev/null; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build extension
+        run: |
+          zip -r finicky-chrome-integration.zip . -x "*.git*" "*.github*" "*.zip"
+
+      - name: Create Release
+        if: steps.check_release.outputs.exists == 'false'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
+          release_name: Release ${{ steps.get_version.outputs.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        if: steps.check_release.outputs.exists == 'false'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./finicky-chrome-integration.zip
+          asset_name: finicky-chrome-integration.zip
+          asset_content_type: application/zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: finicky-chrome-integration
+          path: finicky-chrome-integration.zip
