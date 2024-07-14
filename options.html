@@ -2,6 +2,30 @@
 <html>
   <head>
     <title>Finicky Integration Options</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        max-width: 600px;
+      }
+      h1 {
+        color: #333;
+      }
+      label {
+        display: block;
+        margin-top: 20px;
+      }
+      select {
+        margin-top: 5px;
+        padding: 5px;
+        width: 200px;
+      }
+      #status {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f0f0f0;
+      }
+    </style>
   </head>
   <body>
     <h1>Finicky Integration Options</h1>
@@ -11,6 +35,7 @@
       <option value="Alt">Alt</option>
       <option value="Meta">Command (Mac) / Windows Key (Windows)</option>
     </select>
+    <div id="status"></div>
     <script src="options.js"></script>
   </body>
 </html>

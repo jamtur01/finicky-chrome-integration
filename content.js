@@ -1,13 +1,18 @@
 let modifierPressed = false;
 let currentModifierKey = "Shift";
+let extensionEnabled = true;
 
-chrome.storage.sync.get("modifierKey", (data) => {
+chrome.storage.sync.get(["modifierKey", "enabled"], (data) => {
   currentModifierKey = data.modifierKey || "Shift";
+  extensionEnabled = data.enabled !== false;
 });
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
   if (changes.modifierKey) {
     currentModifierKey = changes.modifierKey.newValue;
+  }
+  if (changes.enabled) {
+    extensionEnabled = changes.enabled.newValue;
   }
 });
 
@@ -24,24 +29,12 @@ document.addEventListener("keyup", function (event) {
 });
 
 document.addEventListener("click", function (event) {
-  if (modifierPressed) {
+  if (extensionEnabled && modifierPressed) {
     const link = event.target.closest("a");
     if (link) {
       event.preventDefault();
-      chrome.runtime
-        .sendMessage({
-          action: "openInFinicky",
-          url: link.href,
-        })
-        .catch((error) =>
-          console.log("Error sending message to background:", error)
-        );
+      const finickyUrl = "finicky://" + link.href.replace(/^https?:\/\//, "");
+      window.location.href = finickyUrl;
     }
-  }
-});
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "initialize") {
-    sendResponse({ status: "initialized" });
   }
 });
