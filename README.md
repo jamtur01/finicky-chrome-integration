@@ -1,4 +1,8 @@
+<img src="icons/eight128.png" alt="Finicky Chrome Integration Icon" width="64" height="64" align="left">
+
 # Finicky Chrome Integration
+
+<br clear="left"/>
 
 ## Overview
 
