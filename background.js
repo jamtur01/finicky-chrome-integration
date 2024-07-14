@@ -1,3 +1,11 @@
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.sync.get("modifierKey", (data) => {
+    if (!data.modifierKey) {
+      chrome.storage.sync.set({ modifierKey: "Shift" });
+    }
+  });
+});
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (
     changeInfo.status === "complete" &&

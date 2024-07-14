@@ -1,19 +1,30 @@
-let shiftPressed = false;
+let modifierPressed = false;
+let currentModifierKey = "Shift";
+
+chrome.storage.sync.get("modifierKey", (data) => {
+  currentModifierKey = data.modifierKey || "Shift";
+});
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (changes.modifierKey) {
+    currentModifierKey = changes.modifierKey.newValue;
+  }
+});
 
 document.addEventListener("keydown", function (event) {
-  if (event.key === "Shift") {
-    shiftPressed = true;
+  if (event.key === currentModifierKey) {
+    modifierPressed = true;
   }
 });
 
 document.addEventListener("keyup", function (event) {
-  if (event.key === "Shift") {
-    shiftPressed = false;
+  if (event.key === currentModifierKey) {
+    modifierPressed = false;
   }
 });
 
 document.addEventListener("click", function (event) {
-  if (shiftPressed) {
+  if (modifierPressed) {
     const link = event.target.closest("a");
     if (link) {
       event.preventDefault();

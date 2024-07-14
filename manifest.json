@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Finicky Chrome Integration",
-  "version": "1.0",
-  "permissions": ["tabs"],
+  "version": "1.1",
+  "description": "Open links in Finicky directly from Chrome",
+  "permissions": ["tabs", "storage"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
@@ -12,5 +13,17 @@
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/eight16.png",
+    "32": "icons/eight32.png",
+    "128": "icons/eight128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/eight16.png",
+      "32": "icons/eight32.png"
+    }
+  }
 }
