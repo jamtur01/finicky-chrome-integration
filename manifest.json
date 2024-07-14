@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "Finicky Chrome Integration",
+  "version": "1.0",
+  "permissions": [
+    "webNavigation",
+    "tabs",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
