@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Finicky Integration Options</title>
+    <title>Finicky Chrome Integration Options</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -28,14 +28,20 @@
     </style>
   </head>
   <body>
-    <h1>Finicky Integration Options</h1>
-    <label for="modifierKey">Choose modifier key:</label>
+    <h1>Finicky Chrome Integration Options</h1>
+
+    <label for="modifierKey">Modifier Key to Open in Finicky:</label>
     <select id="modifierKey">
+      <option value="None">None (Always active)</option>
       <option value="Shift">Shift</option>
       <option value="Alt">Alt</option>
-      <option value="Meta">Command (Mac) / Windows Key (Windows)</option>
+      <option value="Meta">Command/Windows</option>
     </select>
+
+    <br /><br />
+
     <div id="status"></div>
+
     <script src="options.js"></script>
   </body>
 </html>

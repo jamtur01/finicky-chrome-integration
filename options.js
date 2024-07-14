@@ -1,17 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const select = document.getElementById("modifierKey");
+  const modifierKeySelect = document.getElementById("modifierKey");
   const status = document.getElementById("status");
 
   chrome.storage.sync.get("modifierKey", (data) => {
-    select.value = data.modifierKey || "Shift";
+    modifierKeySelect.value = data.modifierKey || "None";
   });
 
-  select.addEventListener("change", () => {
-    chrome.storage.sync.set({ modifierKey: select.value }, () => {
+  function saveOptions() {
+    chrome.storage.sync.set({ modifierKey: modifierKeySelect.value }, () => {
       status.textContent = "Options saved.";
       setTimeout(() => {
         status.textContent = "";
       }, 2000);
     });
-  });
+  }
+
+  modifierKeySelect.addEventListener("change", saveOptions);
 });
