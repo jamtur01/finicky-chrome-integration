@@ -35,6 +35,14 @@ document.addEventListener("click", function (event) {
       event.preventDefault();
       const finickyUrl = "finicky://" + link.href.replace(/^https?:\/\//, "");
       window.location.href = finickyUrl;
+
+      // Reset modifierPressed after opening the link
+      modifierPressed = false;
     }
   }
+});
+
+// Reset modifierPressed when the window loses focus
+window.addEventListener("blur", function () {
+  modifierPressed = false;
 });

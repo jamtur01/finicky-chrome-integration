@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Finicky Chrome Integration",
-  "version": "1.2",
+  "version": "1.2.1",
   "description": "Open links in Finicky directly from Chrome",
   "permissions": ["storage"],
   "host_permissions": ["<all_urls>"],
